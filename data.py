@@ -53,3 +53,19 @@ selected2 = option_menu(None, ["Home", "Upload", "Tasks", 'Settings'],
         "streamlit >= 0.63",
     ],
 )
+import streamlit as st
+import pickle
+import pandas as pd
+import numpy as np
+from streamlit_option_menu import option_menu
+
+#creating a sidebar with different pages to navigate  
+#with st.sidebar: #if you want a side bar 
+selected = option_menu(
+       menu_title = None ,#"Main Menu",
+       options = ["Home","Model","About"],
+       icons = ["house","robot","person"],
+       menu_icon = "menu-button",
+       default_index = 0,
+       orientation = "horizontal",  #to make the menubar horizontal 
+    )
