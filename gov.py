@@ -15,6 +15,7 @@ st.image("https://thumbs.dreamstime.com/z/watch-out-buses-kalakad-tamil-nadu-ind
 st.header('**SAMPLE DATASET**')
 
 data = pd.read_csv("bus data analysis - Sheet1.csv");
+st.table(data)
 
-t.write('**Thank You for your wonderful time**')
+st.write('**Thank You for your wonderful time**')
 
