@@ -3,7 +3,9 @@ import pickle
 import pandas as pd
 import numpy as np
 import streamlit as st
+pip install streamlit-option-menu
 from streamlit_option_menu import option_menu
+
 
 
 
