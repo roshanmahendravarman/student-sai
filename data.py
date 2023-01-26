@@ -2,23 +2,21 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
+
 import streamlit as st
-pip install streamlit-option-menu
 from streamlit_option_menu import option_menu
+
+with st.sidebar:
+    selected = option_menu("Main Menu", ["Home", 'Settings'], 
+        icons=['house', 'gear'], menu_icon="cast", default_index=1)
+    selected
 
 
 
 
 #creating a sidebar with different pages to navigate  
 #with st.sidebar: #if you want a side bar 
-selected = option_menu(
-       menu_title = None ,#"Main Menu",
-       options = ["Home","Model","About"],
-       icons = ["house","robot","person"],
-       menu_icon = "menu-button",
-       default_index = 0,
-       orientation = "horizontal",  #to make the menubar horizontal 
-    )
+
     
 if selected == "Home":
     #st.title('Home')
