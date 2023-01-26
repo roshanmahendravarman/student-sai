@@ -2,7 +2,9 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-from streamlit option_menu import option_menu
+import streamlit as st
+from streamlit_option_menu import option_menu
+
 
 
 #creating a sidebar with different pages to navigate  
