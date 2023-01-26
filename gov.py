@@ -16,6 +16,5 @@ st.header('**SAMPLE DATASET**')
 
 data = pd.read_csv("bus data analysis - Sheet1.csv");
 st.table(data)
-
-t.write("**Thank You for your wonderful time**")
+t.write('**Thank You for your wonderful time**')
 
