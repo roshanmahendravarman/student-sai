@@ -1,73 +1,55 @@
 
-import streamlit.components.v1 as components
+import setuptools
 
-import os
-
-_RELEASE = True
-
-# Declare a Streamlit component. `declare_component` returns a function
-# that is used to create instances of the component. We're naming this
-# function "_component_func", with an underscore prefix, because we don't want
-# to expose it directly to users. Instead, we will create a custom wrapper
-# function, below, that will serve as our component's public API.
-
-# It's worth noting that this call to `declare_component` is the
-# *only thing* you need to do to create the binding between Streamlit and
-# your component frontend. Everything else we do in this file is simply a
-# best practice.
-
-if not _RELEASE:
-    component_func = components.declare_component(
-        "option_menu",
-        url="http://localhost:3001",
-    )
-else:
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    build_dir = os.path.join(parent_dir, "frontend/dist")
-    component_func = components.declare_component(
-        "option_menu", path=build_dir)
-
-# Create a wrapper function for the component. This is an optional
-# best practice - we could simply expose the component function returned by
-# `declare_component` and call it done. The wrapper allows us to customize
-# our component's API: we can pre-process its input args, post-process its
-# output value, and add a docstring for users.
-
-
-def option_menu(menu_title, options, default_index=0, menu_icon=None, icons=None, orientation="vertical",
-                styles=None, key=None):
-    component_value = _component_func(options=options, 
-                key=key, defaultIndex=default_index, icons=icons, menuTitle=menu_title, 
-                menuIcon=menu_icon, default=options[default_index], 
-                orientation=orientation, styles=styles)
-    return component_value
-
-# Create a second instance of our component whose `name` arg will vary
-# based on a text_input widget.
-#
-# We use the special "key" argument to assign a fixed identity to this
-# component instance. By default, when a component's arguments change,
-# it is considered a new instance and will be re-mounted on the frontend
-# and lose its current state. In this case, we want to vary the component's
-# "name" argument without having it get recreated.
-if __name__ == "__main__":
-    st.set_page_config(page_title="Option Menu", layout="wide")
-    with st.sidebar:
-        selected = option_menu("Main Menu", ["Home", "Upload","---", "Tasks", 'Settings'], 
-        icons=['house', 'cloud-upload', None, "list-task", 'gear'], menu_icon="cast", default_index=1)
-
-    selected2 = option_menu(None, ["Home", "Upload", "---", "Tasks", 'Settings'], 
-        icons=['house', 'cloud-upload', None, "list-task", 'gear'], 
-        menu_icon="cast", default_index=0, orientation="horizontal")
-
-    selected3 = option_menu(None, ["Home", "Upload",  "Tasks", 'Settings'], 
-        icons=['house', 'cloud-upload', "list-task", 'gear'], 
-        menu_icon="cast", default_index=0, orientation="horizontal",
-        styles={
-            "container": {"padding": "0!important", "background-color": "#fafafa"},
-            "icon": {"color": "orange", "font-size": "25px"}, 
-            "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-            "nav-link-selected": {"background-color": "green"},
-        }
-    )
-   
+setuptools.setup(
+    name="streamlit-option-menu",
+    version="0.3.3",
+    author="Victor Yan",
+    author_email="victoryhb@163.com",
+    description="streamlit-option-menu is a simple Streamlit component that allows users to select a single item from a list of options in a menu.",
+    long_description="""streamlit-option-menu is a simple Streamlit component that allows users to select a single item from a list of options in a menu.
+It is similar in function to st.selectbox(), except that:
+- It uses a simple static list to display the options instead of a dropdown
+- It has configurable icons for each option item and the menu title
+It is built on [streamlit-component-template-vue](https://github.com/andfanilo/streamlit-component-template-vue), styled with [Bootstrap](https://getbootstrap.com/) and with icons from [bootstrap-icons](https://icons.getbootstrap.com/)
+## Installation
+```
+pip install streamlit-option-menu
+```
+## Parameters
+The `option_menu` function accepts the following parameters:
+- menu_title (required): the title of the menu; pass None to hide the title
+- options (required): list of (string) options to display in the menu; set an option to "---" if you want to insert a section separator
+- default_index (optional, default=0): the index of the selected option by default
+- menu_icon (optional, default="menu-up"): name of the [bootstrap-icon](https://icons.getbootstrap.com/) to be used for the menu title
+- icons (optional, default=["caret-right"]): list of [bootstrap-icon](https://icons.getbootstrap.com/) names to be used for each option; its length should be equal to the length of options
+- orientation (optional, default="vertical"): "vertical" or "horizontal"; whether to display the menu vertically or horizontally
+The function returns the (string) option currently selected
+## Example
+```
+import streamlit as st
+from streamlit_option_menu import option_menu
+with st.sidebar:
+    selected = option_menu("Main Menu", ["Home", 'Settings'], 
+        icons=['house', 'gear'], menu_icon="cast", default_index=1)
+    selected
+# horizontal Menu
+selected2 = option_menu(None, ["Home", "Upload", "Tasks", 'Settings'], 
+    icons=['house', 'cloud-upload', "list-task", 'gear'], 
+    menu_icon="cast", default_index=0, orientation="horizontal")
+    selected2
+```
+""",
+    long_description_content_type="text/plain",
+    url="https://github.com/victoryhb/streamlit-option-menu",
+    packages=setuptools.find_packages(),
+    include_package_data=True,
+    classifiers=[],
+    python_requires=">=3.6",
+    install_requires=[
+        # By definition, a Custom Component depends on Streamlit.
+        # If your component has other Python dependencies, list
+        # them here.
+        "streamlit >= 0.63",
+    ],
+)
